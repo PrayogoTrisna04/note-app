@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Visibility {
+  PRIVATE
+  SHARED
+  PUBLIC
+}
+
+enum Permission {
+  READ
+  COMMENT
+  EDIT
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String?
+  email        String?     @unique
+  passwordHash String?
+  notes        Note[]      @relation("UserNotes")      // Notes yang dia punya
+  shares       SharedNote[]                             // Notes yang dishare ke dia
+  comments     Comment[]                               
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Note {
+  id          String       @id @default(cuid())
+  ownerId     String
+  owner       User         @relation("UserNotes", fields: [ownerId], references: [id], onDelete: Cascade)
+  title       String
+  contentMd   String       @db.Text
+  visibility  Visibility   @default(PRIVATE)
+  shares      SharedNote[]                                 // Relasi untuk notes yang dishare ke user lain
+  comments    Comment[]
+  deletedAt   DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([ownerId, visibility])
+}
+
+model SharedNote {
+  id         String     @id @default(cuid())
+  noteId     String
+  userId     String
+  permission Permission @default(READ)
+  note       Note       @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([noteId, userId])
+  @@index([userId])
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  noteId    String
+  authorId  String
+  parentId  String?
+  contentMd String    @db.Text
+  note      Note      @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([noteId, createdAt])
+}

@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function NoteCard({note}:any){return(<div className="border p-4 rounded bg-white shadow-sm hover:shadow transition"><h2 className="font-semibold text-lg">{note.title}</h2><p className="text-gray-700">{(note.contentMd||"").slice(0,150)}...</p><Link href={`/notes/${note.id}`} className="mt-2 inline-block">Read more</Link></div>);}

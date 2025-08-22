@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
+export default function Navbar(){const {data:session}=useSession();return(<nav className="bg-gray-900 text-white"><div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center"><Link href="/" className="font-bold">NoteApp</Link><div className="flex gap-4 items-center"><Link href="/public">Public</Link><Link href="/notes">My Notes</Link>{session?(<button onClick={()=>signOut()} className="bg-red-600 px-3 py-1 rounded">Logout</button>):(<Link href="/auth/signin" className="bg-blue-600 px-3 py-1 rounded">Login</Link>)}</div></div></nav>);}
