@@ -2,13 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/notes": "pages/notes.js",
-  "/auth/signin": "pages/auth/signin.js",
   "/api/users": "pages/api/users.js",
+  "/notes": "pages/notes.js",
   "/api/notes": "pages/api/notes.js",
-  "/api/auth/login": "pages/api/auth/login.js",
-  "/api/notes/private": "pages/api/notes/private.js",
-  "/api/public-notes": "pages/api/public-notes.js",
-  "/api/comments": "pages/api/comments.js",
-  "/api/notes/[id]": "pages/api/notes/[id].js"
+  "/api/notes/private": "pages/api/notes/private.js"
 }
