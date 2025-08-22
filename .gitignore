@@ -1,1 +1,14 @@
-node_modules
+# Node modules
+node_modules/
+
+# Build output
+.next/
+out/
+dist/
+
+# Logs
+pnpm-debug.log*
+
+# Local env files
+.env
+
