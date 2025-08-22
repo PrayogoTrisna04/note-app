@@ -4,10 +4,11 @@
   "/_document": "pages/_document.js",
   "/notes": "pages/notes.js",
   "/auth/signin": "pages/auth/signin.js",
+  "/api/users": "pages/api/users.js",
+  "/api/notes": "pages/api/notes.js",
   "/api/auth/login": "pages/api/auth/login.js",
   "/api/notes/private": "pages/api/notes/private.js",
-  "/api/users": "pages/api/users.js",
-  "/api/shares": "pages/api/shares.js",
   "/api/public-notes": "pages/api/public-notes.js",
-  "/api/comments": "pages/api/comments.js"
+  "/api/comments": "pages/api/comments.js",
+  "/api/notes/[id]": "pages/api/notes/[id].js"
 }

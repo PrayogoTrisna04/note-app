@@ -1,5 +1,7 @@
 "use client";
 
+import AddComment from "@/components/CommentModal";
+import ShareNoteModal from "@/components/ShareNoteModal";
 import { useState, useEffect } from "react";
 
 type Note = {
@@ -223,24 +225,6 @@ export default function NotesDashboard() {
   );
 }
 
-// --- AddComment ---
-function AddComment({ noteId, onAdd }: { noteId: string; onAdd: (text: string) => void }) {
-  const [text, setText] = useState("");
-  const submit = () => { onAdd(text); setText(""); };
-  return (
-    <div className="flex gap-2 mt-1">
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Add comment..."
-        className="flex-1 border rounded px-2 py-1"
-      />
-      <button onClick={submit} className="bg-blue-600 text-white px-2 rounded hover:bg-blue-700">Add</button>
-    </div>
-  );
-}
-
 // --- NoteModal ---
 function NoteModal({ note, onClose, onSave }: { note: Note | null; onClose: () => void; onSave: (title: string, content: string, visibility: "PUBLIC" | "PRIVATE") => void }) {
   const [title, setTitle] = useState(note?.title || "");
@@ -279,38 +263,38 @@ function NoteModal({ note, onClose, onSave }: { note: Note | null; onClose: () =
   );
 }
 
-// --- ShareNoteModal ---
-function ShareNoteModal({ noteId, isOpen, onClose, onShared, users, onShare }: { noteId: string; isOpen: boolean; onClose: () => void; onShared: () => void; users: User[]; onShare: (noteId: string, userId: string, permission: "READ" | "COMMENT" | "EDIT") => void }) {
-  const [selectedUser, setSelectedUser] = useState("");
-  const [permission, setPermission] = useState<"READ" | "COMMENT" | "EDIT">("READ");
+// // --- ShareNoteModal ---
+// function ShareNoteModal({ noteId, isOpen, onClose, onShared, users, onShare }: { noteId: string; isOpen: boolean; onClose: () => void; onShared: () => void; users: User[]; onShare: (noteId: string, userId: string, permission: "READ" | "COMMENT" | "EDIT") => void }) {
+//   const [selectedUser, setSelectedUser] = useState("");
+//   const [permission, setPermission] = useState<"READ" | "COMMENT" | "EDIT">("READ");
 
-  const handleShare = () => {
-    if (!selectedUser) return alert("Select a user");
-    onShare(noteId, selectedUser, permission);
-    onShared();
-    onClose();
-  };
+//   const handleShare = () => {
+//     if (!selectedUser) return alert("Select a user");
+//     onShare(noteId, selectedUser, permission);
+//     onShared();
+//     onClose();
+//   };
 
-  if (!isOpen) return null;
+//   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white p-5 rounded shadow-lg w-80">
-        <h3 className="font-bold mb-3">Share Note</h3>
-        <select className="w-full border px-2 py-1 mb-2 rounded" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-          <option value="">Select user</option>
-          {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
-        </select>
-        <select className="w-full border px-2 py-1 mb-4 rounded" value={permission} onChange={(e) => setPermission(e.target.value as any)}>
-          <option value="READ">READ</option>
-          <option value="COMMENT">COMMENT</option>
-          <option value="EDIT">EDIT</option>
-        </select>
-        <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="px-3 py-1 border rounded hover:bg-gray-100">Cancel</button>
-          <button onClick={handleShare} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Share</button>
-        </div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+//       <div className="bg-white p-5 rounded shadow-lg w-80">
+//         <h3 className="font-bold mb-3">Share Note</h3>
+//         <select className="w-full border px-2 py-1 mb-2 rounded" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+//           <option value="">Select user</option>
+//           {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
+//         </select>
+//         <select className="w-full border px-2 py-1 mb-4 rounded" value={permission} onChange={(e) => setPermission(e.target.value as any)}>
+//           <option value="READ">READ</option>
+//           <option value="COMMENT">COMMENT</option>
+//           <option value="EDIT">EDIT</option>
+//         </select>
+//         <div className="flex justify-end gap-2">
+//           <button onClick={onClose} className="px-3 py-1 border rounded hover:bg-gray-100">Cancel</button>
+//           <button onClick={handleShare} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Share</button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
